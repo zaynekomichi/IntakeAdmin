@@ -2,6 +2,12 @@
   --color:#00aeff;
   --shadow: 0px 1px 5px 0px grey;
   --radius: 7px;
+  user-select: none;
+  user-zoom: none;
+}
+
+img{
+  -webkit-user-drag: none;
 }
 
 ::-webkit-scrollbar{
@@ -179,7 +185,6 @@ ion-alert{
 }
 
 ion-alert button{
-  padding-left: 10px;
   background-color: white;
   font-size: 15px;
   background: -webkit-linear-gradient(purple,#00aeff);
@@ -248,6 +253,30 @@ ion-alert button:hover{
 
 .FlexInfo button:active{
   background: #a4d4eb;
+}
+
+.Alert-Width{
+  width: 200px;
+}
+
+ion-modal{
+  display: inline-block;
+  position: fixed;
+  left: 100px;
+  right: 100px;
+  height: 60vh;
+  text-align: center;
+  background-color: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  word-break: normal;
+}
+
+.CloseModal:hover{
+  cursor: pointer;
+  color: red;
+  transition: 1s;
 }
 
 

@@ -1,13 +1,18 @@
 import axios from "axios";
-import { IonAlert } from "@ionic/react";
+import { IonAlert,IonModal} from "@ionic/react";
 import { useState,useEffect } from "react";
 import { serverLink } from "renderer/links";
+import { IoClose } from "react-icons/io5";
+
 
 const Dashboard = () =>{
+
+
 
   const [cardData, setCardData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [user,setUser] = useState('');
+  //const [Data,setData] = useState([]);
   const [OpenFirst, setOpenFirst] = useState(false);
   const [OpenSec, setOpenSec] = useState(false);
   const [OpenThird, setOpenThird] = useState(false);
@@ -21,7 +26,8 @@ const Dashboard = () =>{
     }).then((response)=>{
       setCardData(response.data);
     }).catch((error)=>{
-      console.log(error)
+      setOpenSec(true);
+
     });
 
     axios.get(`${serverLink}Dashboard.php`,{
@@ -34,6 +40,16 @@ const Dashboard = () =>{
       console.log(error)
     })
   },[])
+
+  const Datad=()=>{
+    return(
+      <div>
+        {userData.map((d:any)=>{
+          <p>{d.User}</p>
+        })}
+      </div>
+    );
+  }
 
   return(
     <div className="Container">
@@ -75,7 +91,9 @@ const Dashboard = () =>{
                   setUser(user.User);
                   setOpenFirst(true);
                 }}>History</button>
-                <button>Delete</button>
+                <button onClick={()=>{
+                  setOpenThird(true);
+                }}>Delete</button>
               </div>
             </div>
           );
@@ -85,10 +103,11 @@ const Dashboard = () =>{
         <h3 className="specialText">Frequent Withdrawer</h3>
         </div>
       </div>
-      <IonAlert
+      {/* <IonAlert
         isOpen={OpenFirst}
-        header={`${user}History`}
-        message={"Hello"}
+        header={`History for ${user}`}
+        mode="ios"
+        message={``}
         buttons={[
           {
             text:'OK',
@@ -99,7 +118,52 @@ const Dashboard = () =>{
 
         }
         ]}
+      /> */}
+      <IonAlert
+        isOpen={OpenSec}
+        header={`Network Error`}
+        message={`Please Check if the server is online or contact your network Admin`}
+        mode="ios"
+        buttons={[
+          {
+            text:'OK',
+            role:'dismiss',
+            handler:dismiss=>{
+              setOpenSec(false);
+            }
+
+        }
+        ]}
       />
+      <IonAlert
+        isOpen={OpenThird}
+        header={`Alert`}
+        message={`Are you sure you want to delete User.
+                  User data will be lost`}
+        cssClass={'Alert-Width'}
+        buttons={[
+          {
+            text:'OK',
+            role:'dismiss',
+            handler:dismiss=>{
+              setOpenThird(false);
+            }
+
+        }
+        ]}
+      />
+      <IonModal isOpen={false} >
+        <div>
+        <div className="CloseModal" style={{textAlign:'right'}}>
+            <button onClick={()=>{
+              setOpenFirst(false);
+              console.log(OpenFirst);
+            }}>Close</button>
+          </div>
+          <h1></h1>
+        </div>
+
+      </IonModal>
     </div>
   );
 }
