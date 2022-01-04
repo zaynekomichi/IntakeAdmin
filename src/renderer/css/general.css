@@ -1,0 +1,195 @@
+::-webkit-scrollbar{
+  background-color: aliceblue;
+  width:5px
+}
+
+::-webkit-scrollbar:hover{
+  width: 30px;
+}
+
+::-webkit-scrollbar-thumb{
+  border-radius: 7px;
+  background-color: #00aeff;
+}
+
+
+input{
+  width:200px;
+  height: 25px;
+  border-radius: 7px;
+  text-align: center;
+  border: 1px solid #00aeff;
+}
+
+input:focus{
+  outline-color: #00aeff;
+}
+
+
+.btn{
+  cursor:pointer;
+  border-radius: 7px;
+  height: 24px;
+  background-color: aliceblue;
+  border: 1px solid grey;
+  box-shadow: 0px 1px 5px 0px rgb(230, 230, 230);
+}
+
+.btn:hover{
+  transition: 0.5s;
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+}
+
+.btn:active{
+   box-shadow: inset 0px 1px 5px rgb(184, 184, 184);
+}
+
+.btn-block{
+  display: block;
+  width:100%;
+  border:none;
+}
+
+.error-message{
+  background: -webkit-linear-gradient(purple, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Container{
+  margin: 20px;
+}
+
+.Sidebar{
+  position: fixed;
+  padding: 10px;
+  width: 200px;
+  height: 95vh;
+  border-radius: 7px;
+  box-shadow: 0px 1px 5px 0px grey;
+  float: left;
+  margin:10px;
+  margin-top: 0px;
+  margin-left:5px;
+  margin-bottom: 20px;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+.center-img{
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.Container{
+  margin-left: 235px;
+  margin-top: 15px;
+}
+
+.Tables{
+  display: block;
+  text-align: center;
+  border-radius: 7px;
+  padding: 20px;
+  justify-content: center;
+  width: 500px;
+  height: 84vh;
+  background-color: white;
+  box-shadow: 0px 1px 5px 0px grey;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.Tables table{
+  border-collapse: collapse;
+}
+
+.Tables th{
+  background: -webkit-linear-gradient(purple, #00aeff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.Tables thead{
+  background-color: white;
+}
+.Tables tr{
+  height: 35px;
+  border-width:0px;
+}
+
+.Tables tr:nth-child(even){
+  background:aliceblue;
+}
+
+.Tables tr:hover{
+  cursor: pointer;
+  background-color: rgb(212, 222, 231);
+}
+
+.Alert-Box{
+  position: relative;
+  left: 350px;
+  bottom: 450px;
+  justify-content: center;
+  z-index: 1;
+  padding: 20px;
+  width:200px;
+  height: 150px;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 0px 1px 5px 0px grey;
+  margin-right: auto;
+  margin-left: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.specialText{
+  background: -webkit-linear-gradient(purple, #00aeff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+ion-alert{
+  text-align: left;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 7px;
+  box-shadow: 0px 1px 5px 0px grey;
+  background-color: white;
+  width:200px;
+  word-break: normal;
+  height: 200px;
+  padding: 20px;
+}
+
+ion-alert button{
+  padding-left: 10px;
+  background-color: white;
+  position: fixed;
+  top:180px;
+  left:180px;
+  font-size: 15px;
+  background: -webkit-linear-gradient(purple,#00aeff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color:transparent;
+  background-color: white;
+  border:none;
+}
+
+ion-alert button:hover{
+  cursor: pointer;
+}
+
+

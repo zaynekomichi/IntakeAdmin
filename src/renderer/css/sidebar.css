@@ -1,0 +1,11 @@
+.sidebar-el:hover{
+  background: -webkit-linear-gradient(purple, #00aeff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-color: #00aeff;
+  margin-left: 20px;
+  transition: 0.5s;
+  transform: scale(1.1);
+}
+
+

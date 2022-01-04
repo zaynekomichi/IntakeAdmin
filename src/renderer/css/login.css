@@ -1,0 +1,20 @@
+#Login{
+  background-color: #00aeff;
+  color:white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 1px 5px 0px grey;
+  padding: 20px;
+  height: 200px;
+  border-radius: 7px;
+}
+
+#Login div{
+  margin: 10px;
+  width: 210px;
+}
+
+
