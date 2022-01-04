@@ -1,3 +1,9 @@
+:root{
+  --color:#00aeff;
+  --shadow: 0px 1px 5px 0px grey;
+  --radius: 7px;
+}
+
 ::-webkit-scrollbar{
   background-color: aliceblue;
   width:5px
@@ -9,7 +15,7 @@
 
 ::-webkit-scrollbar-thumb{
   border-radius: 7px;
-  background-color: #00aeff;
+  background-color: var(--color);
 }
 
 
@@ -18,11 +24,11 @@ input{
   height: 25px;
   border-radius: 7px;
   text-align: center;
-  border: 1px solid #00aeff;
+  border: 1px solid var(--color);
 }
 
 input:focus{
-  outline-color: #00aeff;
+  outline-color: var(--color);
 }
 
 
@@ -103,7 +109,7 @@ a{
   width: 500px;
   height: 84vh;
   background-color: white;
-  box-shadow: 0px 1px 5px 0px grey;
+  box-shadow: var(--shadow);
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -168,28 +174,80 @@ ion-alert{
   border-radius: 7px;
   box-shadow: 0px 1px 5px 0px grey;
   background-color: white;
-  width:200px;
   word-break: normal;
-  height: 200px;
   padding: 20px;
 }
 
 ion-alert button{
   padding-left: 10px;
   background-color: white;
-  position: fixed;
-  top:180px;
-  left:180px;
   font-size: 15px;
   background: -webkit-linear-gradient(purple,#00aeff);
   -webkit-background-clip: text;
   -webkit-text-fill-color:transparent;
   background-color: white;
   border:none;
+  text-align: right;
 }
 
 ion-alert button:hover{
   cursor: pointer;
+}
+
+.GeneralFlex{
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+}
+
+.GeneralCards{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 200px;
+  margin: 10px;
+  padding: 20px;
+  box-shadow: 0px 1px 5px 0px grey;
+  border-radius: 7px;
+  width: 210px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
+
+.TwoCards{
+  margin: 10px;
+  padding: 20px;
+  width: 35vw;
+  height: 60vh;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+}
+
+.FlexInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+  padding: 10px;
+  margin: 20px;
+  border-radius: var(--radius);
+}
+
+.FlexInfo button{
+  width:70px;
+  margin-left: 5px;
+  border-radius: 7px;
+  border: 0px double grey;
+  color: grey;
+}
+.FlexInfo button:hover{
+  cursor: pointer;
+  background: #cee6f1;
+}
+
+.FlexInfo button:active{
+  background: #a4d4eb;
 }
 
 
