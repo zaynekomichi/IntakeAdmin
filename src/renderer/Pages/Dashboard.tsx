@@ -17,6 +17,7 @@ const Dashboard = () =>{
   const [OpenFirst, setOpenFirst] = useState('none');
   const [OpenSec, setOpenSec] = useState(false);
   const [OpenThird, setOpenThird] = useState(false);
+  const [OpenFourth, setOpenFourth] = useState(false);
 
 
   useEffect(()=>{
@@ -89,7 +90,9 @@ const Dashboard = () =>{
                 {user.User}
               </div>
               <div>
-                <button>Edit</button>
+                <button onClick={()=>{
+                  setUser(user.User);
+                  setOpenFourth(true)}}>Edit</button>
                 <button onClick={()=>{
                   getUser(user.User);
                   setUser(user.User);
@@ -108,6 +111,26 @@ const Dashboard = () =>{
         <h3 className="specialText">Flashboard</h3>
         </div>
       </div>
+
+      <IonAlert isOpen={OpenFourth}
+                header={`Change Password`}
+                message={ `
+                Password for ${user}
+                <br/>
+                <input type="text" placeholder="Password"/>
+                <br/>
+                <input type="text" placeholder="Confirm Password"/>
+                `}
+                buttons={[
+                  {
+                    text:'Ok',
+                    role:'dismiss',
+                    handler:dismiss=>{
+                      setOpenFourth(false)
+                    }
+                  }
+                ]}
+      />
 
       {/* Alert function */}
       <IonAlert
