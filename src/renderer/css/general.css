@@ -256,21 +256,50 @@ ion-alert button:hover{
 }
 
 .Alert-Width{
-  width: 200px;
+  width: 100px;
 }
 
-ion-modal{
-  display: inline-block;
+.ion-modal{
+  z-index: 0.0001;
   position: fixed;
-  left: 100px;
+  left: 200px;
   right: 100px;
-  height: 60vh;
+  height: 70vh;
+  width: 70vw;
+  bottom: 15%;
   text-align: center;
   background-color: white;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 20px;
   word-break: normal;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.ion-modal table{
+  display:inline-table;
+  border-collapse: collapse;
+  text-align: left;
+  border-radius: var(--radius);
+  width: 80%;
+}
+
+.ion-modal th{
+  background: -webkit-linear-gradient(purple, #00aeff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.ion-modal tr{
+  height: 35px;
+  border-width:0px;
+}
+
+.ion-modal tr:nth-child(even){
+  background:aliceblue;
 }
 
 .CloseModal:hover{
@@ -279,4 +308,10 @@ ion-modal{
   transition: 1s;
 }
 
+
+.Close-Btn:hover{
+  color: red;
+  transition: 0.5s;
+  cursor: pointer;
+}
 

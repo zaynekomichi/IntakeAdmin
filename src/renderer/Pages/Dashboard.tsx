@@ -1,8 +1,9 @@
 import axios from "axios";
-import { IonAlert,IonModal} from "@ionic/react";
+import { IonAlert} from "@ionic/react";
 import { useState,useEffect } from "react";
 import { serverLink } from "renderer/links";
 import { IoClose } from "react-icons/io5";
+import Alert from "renderer/components/alert";
 
 
 const Dashboard = () =>{
@@ -12,8 +13,8 @@ const Dashboard = () =>{
   const [cardData, setCardData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [user,setUser] = useState('');
-  //const [Data,setData] = useState([]);
-  const [OpenFirst, setOpenFirst] = useState(false);
+  const [Data,setData] = useState([]);
+  const [OpenFirst, setOpenFirst] = useState('none');
   const [OpenSec, setOpenSec] = useState(false);
   const [OpenThird, setOpenThird] = useState(false);
 
@@ -41,14 +42,17 @@ const Dashboard = () =>{
     })
   },[])
 
-  const Datad=()=>{
-    return(
-      <div>
-        {userData.map((d:any)=>{
-          <p>{d.User}</p>
-        })}
-      </div>
-    );
+  const getUser=(user:string)=>{
+    axios.get(`${serverLink}Dashboard.php`,{
+      params:{
+        getUser:1,
+        user,
+      }
+    }).then((response)=>{
+      setData(response.data);
+    }).catch(()=>{
+      setOpenSec(true);
+    })
   }
 
   return(
@@ -87,10 +91,11 @@ const Dashboard = () =>{
               <div>
                 <button>Edit</button>
                 <button onClick={()=>{
-
+                  getUser(user.User);
                   setUser(user.User);
-                  setOpenFirst(true);
+                  setOpenFirst('block');
                 }}>History</button>
+
                 <button onClick={()=>{
                   setOpenThird(true);
                 }}>Delete</button>
@@ -103,27 +108,12 @@ const Dashboard = () =>{
         <h3 className="specialText">Frequent Withdrawer</h3>
         </div>
       </div>
-      {/* <IonAlert
-        isOpen={OpenFirst}
-        header={`History for ${user}`}
-        mode="ios"
-        message={``}
-        buttons={[
-          {
-            text:'OK',
-            role:'dismiss',
-            handler:dismiss=>{
-              setOpenFirst(false);
-            }
-
-        }
-        ]}
-      /> */}
       <IonAlert
         isOpen={OpenSec}
         header={`Network Error`}
         message={`Please Check if the server is online or contact your network Admin`}
-        mode="ios"
+        cssClass={'Alert-width'}
+        mode={"ios"}
         buttons={[
           {
             text:'OK',
@@ -152,19 +142,42 @@ const Dashboard = () =>{
         }
         ]}
       />
-      <IonModal isOpen={false} >
-        <div>
-        <div className="CloseModal" style={{textAlign:'right'}}>
-            <button onClick={()=>{
-              setOpenFirst(false);
-              console.log(OpenFirst);
-            }}>Close</button>
+      <div className="ion-modal" style={{'display':OpenFirst}}>
+        <div className="FixedItems">
+          <div className="Close-Btn" style={{'textAlign':'right'}}>
+            <IoClose size={30} onClick={()=>{setOpenFirst('none')}}/>
           </div>
-          <h1></h1>
+          <div>
+          <h1 className="specialText">History for {user}</h1>
+          </div>
         </div>
+        <table>
+          <thead>
+            <th>Date Taken</th>
+            <th>Time Taken</th>
+            <th>Quantity Taken</th>
+            <th>Product Name</th>
+            <th>User</th>
+          </thead>
 
-      </IonModal>
+
+          <tbody>
+            {Data.map((user:any)=>{
+              return(
+                <tr>
+                  <td>{user.TakeoutDate}</td>
+                  <td>{user.TakeoutTime}</td>
+                  <td>{user.Quantity}</td>
+                  <td>{user.productName}</td>
+                  <td>{user.User}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
+
   );
 }
 
