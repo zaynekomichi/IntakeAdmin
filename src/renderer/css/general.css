@@ -173,6 +173,10 @@ a{
   -webkit-text-fill-color: transparent;
 }
 
+.alert-sizes{
+  min-width: 200px;
+}
+
 ion-alert{
   text-align: left;
   overflow-y: scroll;
@@ -185,6 +189,7 @@ ion-alert{
 }
 
 ion-alert button{
+
   background-color: white;
   font-size: 15px;
   background: -webkit-linear-gradient(purple,#00aeff);
@@ -192,7 +197,6 @@ ion-alert button{
   -webkit-text-fill-color:transparent;
   background-color: white;
   border:none;
-  text-align: right;
 }
 
 ion-alert button:hover{
@@ -282,7 +286,7 @@ ion-alert button:hover{
   border-collapse: collapse;
   text-align: left;
   border-radius: var(--radius);
-  width: 80%;
+  width: 98%;
 }
 
 .ion-modal th{

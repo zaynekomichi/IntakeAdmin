@@ -105,9 +105,11 @@ const Dashboard = () =>{
         })}
         </div>
         <div className="TwoCards">
-        <h3 className="specialText">Frequent Withdrawer</h3>
+        <h3 className="specialText">Flashboard</h3>
         </div>
       </div>
+
+      {/* Alert function */}
       <IonAlert
         isOpen={OpenSec}
         header={`Network Error`}
@@ -125,15 +127,24 @@ const Dashboard = () =>{
         }
         ]}
       />
+
+      {/* Delete confirmation */}
       <IonAlert
         isOpen={OpenThird}
         header={`Alert`}
         message={`Are you sure you want to delete User.
-                  User data will be lost`}
-        cssClass={'Alert-Width'}
+                  User data will be lost <br/><br/><br/>`}
+        cssClass={'Alert-Width alert-sizes'}
         buttons={[
           {
-            text:'OK',
+            text:'Yes',
+            role:'Remove',
+            handler:Remove=>{
+              console.log('deleted');
+            }
+          },
+          {
+            text:'No',
             role:'dismiss',
             handler:dismiss=>{
               setOpenThird(false);
@@ -142,6 +153,8 @@ const Dashboard = () =>{
         }
         ]}
       />
+
+      {/* Modal window for history */}
       <div className="ion-modal" style={{'display':OpenFirst}}>
         <div className="FixedItems">
           <div className="Close-Btn" style={{'textAlign':'right'}}>
@@ -150,6 +163,7 @@ const Dashboard = () =>{
           <div>
           <h1 className="specialText">History for {user}</h1>
           </div>
+          <br />
         </div>
         <table>
           <thead>
@@ -157,6 +171,7 @@ const Dashboard = () =>{
             <th>Time Taken</th>
             <th>Quantity Taken</th>
             <th>Product Name</th>
+            <th>Code</th>
             <th>User</th>
           </thead>
 
@@ -169,6 +184,7 @@ const Dashboard = () =>{
                   <td>{user.TakeoutTime}</td>
                   <td>{user.Quantity}</td>
                   <td>{user.productName}</td>
+                  <td>{user.Code}</td>
                   <td>{user.User}</td>
                 </tr>
               );
