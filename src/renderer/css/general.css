@@ -177,6 +177,7 @@ a{
   min-width: 200px;
 }
 
+
 ion-alert{
   text-align: left;
   overflow-y: scroll;
@@ -186,6 +187,11 @@ ion-alert{
   background-color: white;
   word-break: normal;
   padding: 20px;
+}
+
+
+ion-alert input{
+  margin: 20px;
 }
 
 ion-alert button{

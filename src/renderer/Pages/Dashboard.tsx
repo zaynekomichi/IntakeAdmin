@@ -13,12 +13,13 @@ const Dashboard = () =>{
   const [cardData, setCardData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [user,setUser] = useState('');
+  const [id,setId] = useState<any>();
   const [Data,setData] = useState([]);
   const [OpenFirst, setOpenFirst] = useState('none');
   const [OpenSec, setOpenSec] = useState(false);
   const [OpenThird, setOpenThird] = useState(false);
   const [OpenFourth, setOpenFourth] = useState(false);
-
+  const [OpenFifth,setOpenFifth] = useState(false);
 
   useEffect(()=>{
     axios.get(`${serverLink}Dashboard.php`,{
@@ -56,6 +57,37 @@ const Dashboard = () =>{
     })
   }
 
+  const changePassword=(data:any)=>{
+    axios.get(`${serverLink}Dashboard.php`,{
+      params:{
+        'changeUser':1,
+        'id':data.id,
+        'Password':data.first
+    }
+  }).then((response)=>{
+    if(response.data===1){
+      setOpenFifth(true);
+    }
+  }).catch((error)=>{
+    console.log(error);
+  })
+  }
+
+const deleteUser=(id:number)=>{
+  axios.get(`${serverLink}Dashboard.php`,{
+    params:{
+      'deleteUser':1,
+      'id':id
+    }
+  }).then((response)=>{
+    if(response.data===1){
+      setOpenFifth(true);
+    }
+  }).catch((error)=>{
+    console.log(error);
+  })
+}
+
   return(
     <div className="Container">
       <h1>Dashboard</h1>
@@ -92,14 +124,21 @@ const Dashboard = () =>{
               <div>
                 <button onClick={()=>{
                   setUser(user.User);
-                  setOpenFourth(true)}}>Edit</button>
+                  setId(user.id)
+                  setOpenFourth(true)}}>
+                    Edit
+                </button>
+
                 <button onClick={()=>{
                   getUser(user.User);
                   setUser(user.User);
                   setOpenFirst('block');
-                }}>History</button>
+                }}>
+                  History
+                  </button>
 
                 <button onClick={()=>{
+                  setId(user.id);
                   setOpenThird(true);
                 }}>Delete</button>
               </div>
@@ -114,19 +153,40 @@ const Dashboard = () =>{
 
       <IonAlert isOpen={OpenFourth}
                 header={`Change Password`}
-                message={ `
-                Password for ${user}
-                <br/>
-                <input type="text" placeholder="Password"/>
-                <br/>
-                <input type="text" placeholder="Confirm Password"/>
-                `}
+                message={``}
+               inputs={[
+                 {
+                   type:'password',
+                   name:'first',
+                   placeholder:'New Password',
+                 },
+                 {
+                   type:'password',
+                   name:'second',
+                   placeholder:'Repeat New Password'
+                 }
+               ]}
                 buttons={[
                   {
                     text:'Ok',
+                    role:'Change',
+                    handler:data=>{
+                      if(data.first !== data.second || data.first === '' ){
+                        console.log(`not equal`);
+                        setOpenFourth(false);
+                        setOpenFourth(true);
+                      }else{
+                      data = {...data, id,};
+                      changePassword(data);
+                      setOpenFourth(false);
+                      }
+                    }
+                  },
+                  {
+                    text:'Cancel',
                     role:'dismiss',
                     handler:dismiss=>{
-                      setOpenFourth(false)
+                      setOpenFourth(false);
                     }
                   }
                 ]}
@@ -151,6 +211,18 @@ const Dashboard = () =>{
         ]}
       />
 
+      <IonAlert isOpen={OpenFifth}
+      header="Successfull"
+      buttons={[
+        {
+          text:'OK',
+          role:'dismiss',
+          handler:dismiss=>{
+            setOpenFifth(false);
+          }
+        }
+      ]}/>
+
       {/* Delete confirmation */}
       <IonAlert
         isOpen={OpenThird}
@@ -163,7 +235,7 @@ const Dashboard = () =>{
             text:'Yes',
             role:'Remove',
             handler:Remove=>{
-              console.log('deleted');
+              deleteUser(id);
             }
           },
           {
@@ -190,12 +262,15 @@ const Dashboard = () =>{
         </div>
         <table>
           <thead>
-            <th>Date Taken</th>
-            <th>Time Taken</th>
-            <th>Quantity Taken</th>
-            <th>Product Name</th>
-            <th>Code</th>
-            <th>User</th>
+            <tr>
+              <th>Date Taken</th>
+              <th>Time Taken</th>
+              <th>Quantity Taken</th>
+              <th>Product Name</th>
+              <th>Code</th>
+              <th>User</th>
+            </tr>
+
           </thead>
 
 
