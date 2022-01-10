@@ -28,11 +28,6 @@ const Sidebar = () =>{
           <Link to="/CheckoutList"><IoCheckbox style={styles}/> Checkout List</Link>
         </p>
       </div>
-      <div className="sidebar-el">
-        <p>
-          <Link to="Users"><IoPerson style={styles}/> Users</Link>
-        </p>
-      </div>
     </div>
   );
 }

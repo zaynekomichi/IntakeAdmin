@@ -2,16 +2,18 @@ import axios from "axios";
 import { IonAlert} from "@ionic/react";
 import { useState,useEffect } from "react";
 import { serverLink } from "renderer/links";
-import { IoClose } from "react-icons/io5";
+import { IoClose,IoPersonAdd } from "react-icons/io5";
 import Alert from "renderer/components/alert";
+import { useHistory } from "react-router";
 
 
 const Dashboard = () =>{
 
-
+  const history = useHistory();
 
   const [cardData, setCardData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [RecentData, setRecentData] = useState([]);
   const [user,setUser] = useState('');
   const [id,setId] = useState<any>();
   const [Data,setData] = useState([]);
@@ -21,7 +23,7 @@ const Dashboard = () =>{
   const [OpenFourth, setOpenFourth] = useState(false);
   const [OpenFifth,setOpenFifth] = useState(false);
 
-  useEffect(()=>{
+  const requests= ()=>{
     axios.get(`${serverLink}Dashboard.php`,{
       params:{
         'getTotal':1
@@ -30,7 +32,6 @@ const Dashboard = () =>{
       setCardData(response.data);
     }).catch((error)=>{
       setOpenSec(true);
-
     });
 
     axios.get(`${serverLink}Dashboard.php`,{
@@ -41,7 +42,23 @@ const Dashboard = () =>{
       setUserData(response.data);
     }).catch((error)=>{
       console.log(error)
-    })
+    });
+
+    axios.get(`${serverLink}Dashboard.php`,{
+      params:{
+          'recents':1,
+        }
+        }).then((response)=>{
+            setRecentData(response.data);
+        }).catch((error)=>{
+          console.log(error);
+        });
+
+  }
+
+
+  useEffect(()=>{
+   requests();
   },[])
 
   const getUser=(user:string)=>{
@@ -69,7 +86,7 @@ const Dashboard = () =>{
       setOpenFifth(true);
     }
   }).catch((error)=>{
-    console.log(error);
+    setOpenSec(true);
   })
   }
 
@@ -81,10 +98,11 @@ const deleteUser=(id:number)=>{
     }
   }).then((response)=>{
     if(response.data===1){
+      requests();
       setOpenFifth(true);
     }
   }).catch((error)=>{
-    console.log(error);
+      setOpenSec(true);
   })
 }
 
@@ -148,6 +166,31 @@ const deleteUser=(id:number)=>{
         </div>
         <div className="TwoCards">
         <h3 className="specialText">Flashboard</h3>
+        <br/>
+        <div className="specialBackground">
+          <span>
+            <IoPersonAdd size="70px" color="white"/>
+          </span>
+        </div>
+        <div className="TableClose">
+          <p className="specialText">Recent Withdrawals</p>
+          <table>
+            <tbody>
+              {RecentData.map((items:any)=>{
+                return(
+                <tr className="specialTr">
+                  <td>{items.TakeoutDate}</td>
+                  <td>{items.TakeoutTime}</td>
+                  <td>{items.productName}</td>
+                  <td>{items.Quantity}</td>
+                  <td>{items.User}</td>
+                </tr>
+
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         </div>
       </div>
 
@@ -195,8 +238,8 @@ const deleteUser=(id:number)=>{
       {/* Alert function */}
       <IonAlert
         isOpen={OpenSec}
-        header={`Network Error`}
-        message={`Please Check if the server is online or contact your network Admin`}
+        header={`Failed`}
+        message={`If problem persists contact Network Adminstator`}
         cssClass={'Alert-width'}
         mode={"ios"}
         buttons={[
@@ -236,6 +279,7 @@ const deleteUser=(id:number)=>{
             role:'Remove',
             handler:Remove=>{
               deleteUser(id);
+              setOpenThird(false);
             }
           },
           {
