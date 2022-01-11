@@ -22,6 +22,7 @@ const Dashboard = () =>{
   const [OpenThird, setOpenThird] = useState(false);
   const [OpenFourth, setOpenFourth] = useState(false);
   const [OpenFifth,setOpenFifth] = useState(false);
+  const [OpenSixth,setOpenSixth] = useState(false);
 
   const requests= ()=>{
     axios.get(`${serverLink}Dashboard.php`,{
@@ -106,6 +107,31 @@ const deleteUser=(id:number)=>{
   })
 }
 
+const addUser=(data:any)=>{
+  if(data.username === ''){
+    setOpenSec(true)
+  }else if(data.password !== data.confirmPassword || data.password===''){
+    setOpenSec(true)
+  }else{
+    axios.get(`${serverLink}Dashboard.php`,{
+      params:{
+        'addUser':1,
+        'username':data.username,
+        'password':data.password
+      }
+    }).then((response)=>{
+      if(response.data === 1){
+        requests();
+        setOpenFifth(true);
+      }else{
+        setOpenSec(true)
+      }
+    }).catch((error)=>{
+      setOpenSec(true)
+    })
+  }
+}
+
   return(
     <div className="Container">
       <h1>Dashboard</h1>
@@ -167,7 +193,9 @@ const deleteUser=(id:number)=>{
         <div className="TwoCards">
         <h3 className="specialText">Flashboard</h3>
         <br/>
-        <div className="specialBackground">
+        <div className="specialBackground" onClick={()=>{
+          setOpenSixth(true);
+        }}>
           <span>
             <IoPersonAdd size="70px" color="white"/>
           </span>
@@ -178,7 +206,7 @@ const deleteUser=(id:number)=>{
             <tbody>
               {RecentData.map((items:any)=>{
                 return(
-                <tr className="specialTr">
+                <tr className="specialTr" key={items.id}>
                   <td>{items.TakeoutDate}</td>
                   <td>{items.TakeoutTime}</td>
                   <td>{items.productName}</td>
@@ -292,6 +320,50 @@ const deleteUser=(id:number)=>{
         }
         ]}
       />
+
+      <IonAlert
+        isOpen={OpenSixth}
+        header={"Add User"}
+        inputs={[
+          {
+            name:'username',
+            type:'text',
+            placeholder:'Username',
+            attributes:{
+              required:true
+            }
+          },
+          {
+            name:'password',
+            type:'password',
+            placeholder:' Password'
+          },
+          {
+            name:'confirmPassword',
+            type:'password',
+            placeholder:'Confirm Password'
+          }
+        ]}
+        buttons={[
+          {
+            text:'OK',
+            role:'addUser',
+            handler:(data:any)=>{
+              addUser(data);
+              setOpenSixth(false);
+            }
+          },
+          {
+            text:'Cancel',
+            role:'dismiss',
+            handler:()=>{
+              setOpenSixth(false);
+            }
+          }
+        ]}
+      />
+
+
 
       {/* Modal window for history */}
       <div className="ion-modal" style={{'display':OpenFirst}}>
