@@ -112,7 +112,7 @@ a{
   border-radius: 7px;
   padding: 20px;
   justify-content: center;
-  width: 500px;
+  width: 78vw;
   height: 84vh;
   background-color: white;
   box-shadow: var(--shadow);
@@ -121,6 +121,7 @@ a{
 }
 
 .Tables table{
+  width: 76vw;
   border-collapse: collapse;
 }
 
