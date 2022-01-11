@@ -359,3 +359,51 @@ table{
   border-radius: var(--radius);
 
 }
+
+.FlexSearch{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchPanel{
+  overflow-x: hidden;
+  overflow-y: scroll;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  display: block;
+  position: relative;
+  bottom: 618px;
+  background-color: white;
+  text-align: center;
+  padding: 5px;
+  width: 650px;
+  max-height: 90vh;
+}
+
+.searchPanel p{
+  width: 200px;
+  font-size: 15px;
+}
+
+.ResultCards{
+  height: 30px;
+  align-items: center;
+}
+
+.FlexInfoInventory{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+  padding: 10px;
+  margin: 20px;
+  border-radius: var(--radius);
+}
+
+.FlexInfoInventory:hover{
+  transition: 0.5s;
+  box-shadow: 0px 1px 5px 0px aliceblue;
+  cursor: pointer;
+}
+

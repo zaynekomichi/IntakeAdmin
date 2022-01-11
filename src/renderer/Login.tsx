@@ -35,7 +35,7 @@ const Login = () =>{
           <h1>STOCK ADMIN</h1>
         </div>
         <div>
-        <input  className="btn-block" type="Login Code" placeholder="password" onChange={(e)=>setCode(e.target.value!)}/>
+        <input  className="btn-block" type="password" placeholder="password" onChange={(e)=>setCode(e.target.value!)}/>
         </div>
         <div>
         <button className='btn btn-block' onClick={()=>Verify(code)}>Login</button>
