@@ -26,6 +26,7 @@ img{
 
 
 input,textarea{
+  font-family: Rubik;
   width:200px;
   height: 25px;
   border-radius: 7px;
@@ -62,6 +63,12 @@ input:focus{
   display: block;
   width:100%;
   border:none;
+}
+
+.loading{
+  border: 3px solid blue;
+  border-radius: 50%;
+  width: 20px;
 }
 
 .error-message{

@@ -24,7 +24,7 @@ const Login = () =>{
         console.log("response"+viewError);
       }
     }).catch((error)=>{
-      console.log(error);
+      setVisible('block');
     });
   }
 
@@ -40,6 +40,9 @@ const Login = () =>{
         <div>
         <button className='btn btn-block' onClick={()=>Verify(code)}>Login</button>
         </div>
+        {/* <div>
+          <div className='loading'></div>
+        </div> */}
         <div>
           <p style={{display:`${viewError}`}} className='error-message'>{resError}</p>
         </div>

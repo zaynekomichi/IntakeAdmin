@@ -7,7 +7,7 @@ import '../css/general.css';
 import { serverLink } from 'renderer/links';
 
 const Inventory = ()=>{
-
+const [objects,setObjects] = useState<any>();
 const [visible,setVisible] = useState(false);
 const [productName,setProductName] = useState('');
 const [quantity, setQuantity] = useState('');
@@ -21,6 +21,8 @@ const [ErrorMessage, setErrorMessage] = useState("");
 const [Data, setData] = useState([]);
 const [returned,setReturned] =useState([]);
 const [displayed, setDisplay] = useState('none');
+const [secVisible,setSecVisible] = useState(false);
+const [expireDate,setExpired] = useState('');
 useEffect(() => {
   axios.get(`${serverLink}Inventory.php`,{
     params:{
@@ -29,7 +31,6 @@ useEffect(() => {
       }).then((response)=>{
         if(response.data !== null || response.data !== []){
           setData(response.data);
-          console.log(Data);
         }else{
           setErrorMessage("Server Offline");
         }
@@ -54,12 +55,11 @@ const SearchInventory=()=>{
   }
 }
 const List = () =>{
-  console.log(returned)
   if(returned.length !== 0){
     return(<div>
        {returned.map((items:any)=>{
          return(
-          <div className='FlexInfoInventory' onClick={()=>{
+          <div className='FlexInfoInventory' key={items.id}onClick={()=>{
 
             setProductName(items.productName);
             setQuantity(items.Quantity);
@@ -68,10 +68,12 @@ const List = () =>{
             setCode(items.Code)
             setSigned(items.ReceivedBy);
             setdateSigned(items.ReceiveDate);
+            setExpired(items.ExpireDate);
 
           if(visible===false){
             setVisible(true);
           }
+          setDisplay('none');
         }}>
             <div className='ResultCards'>
               <p>{items.productName}</p>
@@ -98,6 +100,19 @@ const List = () =>{
       </div>
     );
   }
+}
+
+const  UpdateData=(data:any)=>{
+  if(data.Quantity==='')data={...data, Quantity:quantity}
+  if(data.Notes ==='')data={...data, Notes:notes}
+  if(data.Provider ==='')data={...data,Provider:provider}
+  if(data.ExpireDate ==='')data={...data, ExpireDate: expireDate}
+  if(data.ReceiveDate ==='')data={...data,ReceiveDate:dateSigned}
+  axios.get(`${serverLink}`,{
+    params:{
+      
+    }
+  })
 }
 
 
@@ -130,6 +145,7 @@ const List = () =>{
             setCode(items.Code)
             setSigned(items.ReceivedBy);
             setdateSigned(items.ReceiveDate);
+            setExpired(items.ExpireDate);
 
           if(visible===false){
             setVisible(true);
@@ -153,14 +169,11 @@ const List = () =>{
       Item Quantity:- ${quantity} <br/>
       Item Signed By:- ${signed} <br/>
       Date Signed:-${dateSigned}
-      Item Notes ▼  <br/>${notes}
+      Item Notes ▼  <br/>${notes}<br>
+      <h2>Update ${productName}</h2>
+      <small>Update for the ones you want to change only</small>
       `}
       inputs={[
-        {
-          name:'productName',
-          type:'text',
-          placeholder:'Product Name'
-        },
         {
           name:'Quantity',
           type:'number',
@@ -183,20 +196,56 @@ const List = () =>{
          {
           text:'Next',
           role:'redirect',
-          handler:()=>{
+          handler:(data:any)=>{
+            setObjects(data);
             setVisible(false);
+            setSecVisible(true);
           }
         },
         {
           text:'Cancel',
           role:'dismiss',
           handler:()=>{
-            setVisible(false); 
+            setVisible(false);
           }
         }
         ]}
 
       />
+
+      <IonAlert
+        isOpen={secVisible}
+        header={"Update Dates"}
+        message={"Update date received and expiry date"}
+        inputs={[
+          {
+            name:'ReceiveDate',
+            type:'date'
+          },
+          {
+            name:'ExpireDate',
+            type:'date'
+          }
+        ]}
+        buttons={[
+          {
+            text:'Update',
+            role:'update',
+            handler:(data)=>{
+              const newData = {...data,...objects};
+              UpdateData(newData);
+              setSecVisible(false);
+            }
+          },
+          {
+            text:'Cancel',
+            role:'dismiss',
+            handler:()=>{
+              setSecVisible(false);
+            }
+          }
+        ]}
+        />
       <div className="searchPanel"style={{'display':displayed}}>
         <div style={{'textAlign':'right'}} onClick={()=>{setDisplay('none'); setSearchData(''); }}><IoClose size="20px"/></div>
         <List/>
