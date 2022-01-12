@@ -25,7 +25,7 @@ img{
 }
 
 
-input{
+input,textarea{
   width:200px;
   height: 25px;
   border-radius: 7px;
@@ -191,8 +191,9 @@ ion-alert{
 }
 
 
-ion-alert input{
-  margin: 20px;
+ion-alert input,textarea{
+  width: 100%;
+  margin-bottom:5px
 }
 
 ion-alert button{

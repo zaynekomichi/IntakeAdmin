@@ -155,12 +155,43 @@ const List = () =>{
       Date Signed:-${dateSigned}
       Item Notes ▼  <br/>${notes}
       `}
+      inputs={[
+        {
+          name:'productName',
+          type:'text',
+          placeholder:'Product Name'
+        },
+        {
+          name:'Quantity',
+          type:'number',
+          placeholder:'Quantity'
+        },
+        {
+          name:'Provider',
+          type:'text',
+          placeholder:'Provider'
+        },
+        {
+          name:'Notes',
+          type:'textarea',
+          placeholder:'Notes'
+        }
+
+
+      ]}
       buttons={[
          {
-          text:'OK',
+          text:'Next',
           role:'redirect',
           handler:()=>{
             setVisible(false);
+          }
+        },
+        {
+          text:'Cancel',
+          role:'dismiss',
+          handler:()=>{
+            setVisible(false); 
           }
         }
         ]}
