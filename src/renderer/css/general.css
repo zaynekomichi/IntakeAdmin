@@ -388,11 +388,11 @@ table{
   width: 650px;
   max-height: 90vh;
 }
-
+/*
 .searchPanel p{
   width: 200px;
   font-size: 15px;
-}
+} */
 
 .ResultCards{
   height: 30px;
@@ -405,8 +405,17 @@ table{
   justify-content: space-between;
   box-shadow: var(--shadow);
   padding: 10px;
-  margin: 20px;
+  margin: 10px;
   border-radius: var(--radius);
+}
+
+.FlexInfoInventory p{
+  margin:0px;
+  padding: 3px;
+}
+
+.FlexInfoInventory div{
+  align-items: center;
 }
 
 .FlexInfoInventory:hover{
@@ -415,3 +424,26 @@ table{
   cursor: pointer;
 }
 
+
+.badgeText{
+  width: fit-content;
+  border-radius: var(--radius);
+  padding: 5px;
+  color:white;
+}
+
+.danger{
+  background: red;
+}
+
+.warning{
+  background: rgb(148, 148, 17);
+}
+
+.primary{
+  background: green;
+}
+
+.FlexSearch div{
+  margin-left: 5px;
+}
