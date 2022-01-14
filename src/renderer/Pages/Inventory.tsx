@@ -177,7 +177,7 @@ const  UpdateData=(data:any)=>{
       <table>
         <thead>
           <tr>
-          <th>Expiry Date</th>
+          <th>Date Received</th>
         <th>Quantity</th>
         <th>Product Name</th>
         <th>ExpiryDate</th>
@@ -185,6 +185,9 @@ const  UpdateData=(data:any)=>{
         </thead>
         <tbody>
         {Data.map((items:any)=>{
+          if(items.Type == 2){
+            items.ExpireDate = 'Fixed Asset';
+          }
           return(
           <tr key={items.id} onClick={()=>{
 
@@ -195,15 +198,18 @@ const  UpdateData=(data:any)=>{
             setCode(items.Code)
             setSigned(items.ReceivedBy);
             setdateSigned(items.ReceiveDate);
-            setExpired(items.ExpireDate);
+
             setExpire(items.ExpireDate)
             setId(items.id);
 
           if(visible===false){
             setVisible(true);
           }
+
+
+
         }}>
-            <td>{items.ExpireDate}</td>
+            <td>{items.ReceiveDate}</td>
             <td>{items.Quantity}</td>
             <td style={{'textAlign':'left'}}>{items.productName}</td>
             <td>{items.ExpireDate}</td>
