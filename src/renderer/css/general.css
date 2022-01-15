@@ -25,7 +25,7 @@ img{
 }
 
 
-input,textarea{
+input,textarea,select{
   font-family: Rubik;
   width:200px;
   height: 25px;
@@ -34,7 +34,7 @@ input,textarea{
   border: 1px solid var(--color);
 }
 
-input:focus{
+input,select:focus{
   outline-color: var(--color);
 }
 
@@ -82,6 +82,7 @@ input:focus{
 }
 
 .Sidebar{
+  background: white;
   position: fixed;
   padding: 10px;
   width: 200px;
@@ -224,6 +225,13 @@ ion-alert button:hover{
   flex-direction: row;
   width: 80vw;
 }
+
+.genFlex{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 
 .GeneralCards{
   display: flex;
@@ -446,4 +454,20 @@ table{
 
 .FlexSearch div{
   margin-left: 5px;
+}
+
+.AddItems{
+  display: flex;
+  flex-direction: column;
+}
+
+.AddItems input,select{
+  width:100%;
+  margin-bottom: 10px;
+}
+
+
+.fixedtext{
+  height: 70px;
+  resize: none;
 }

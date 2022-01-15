@@ -2,7 +2,7 @@ import axios from "axios";
 import { IonAlert} from "@ionic/react";
 import { useState,useEffect } from "react";
 import { serverLink } from "renderer/links";
-import { IoClose,IoPersonAdd } from "react-icons/io5";
+import { IoClose,IoPersonAdd, IoAdd } from "react-icons/io5";
 import Alert from "renderer/components/alert";
 import { useHistory } from "react-router";
 
@@ -193,6 +193,7 @@ const addUser=(data:any)=>{
         <div className="TwoCards">
         <h3 className="specialText">Flashboard</h3>
         <br/>
+        <div className="genFlex">
         <div className="specialBackground" onClick={()=>{
           setOpenSixth(true);
         }}>
@@ -200,6 +201,13 @@ const addUser=(data:any)=>{
             <IoPersonAdd size="70px" color="white"/>
           </span>
         </div>
+        <div className="specialBackground">
+          <span>
+            <IoAdd size="70px" color="white" onClick={()=>{history.push("/Users")}}/>
+          </span>
+        </div>
+        </div>
+
         <div className="TableClose">
           <p className="specialText">Recent Withdrawals</p>
           <table>
