@@ -81,15 +81,18 @@ const createWindow = async () => {
     },
   });
 
-  mainWindow.loadURL(resolveHtmlPath('index.html'));
+  mainWindow.maximize();
 
+  mainWindow.loadURL(resolveHtmlPath('index.html'));
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
     if (process.env.START_MINIMIZED) {
+      mainWindow.setMenu(null)
       mainWindow.minimize();
     } else {
+      mainWindow.setMenu(null)
       mainWindow.show();
     }
   });

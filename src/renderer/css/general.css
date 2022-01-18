@@ -268,6 +268,14 @@ ion-alert button:hover{
   border-radius: var(--radius);
 }
 
+.ExpiredInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
 .FlexInfo button{
   width:70px;
   margin-left: 5px;
@@ -275,6 +283,7 @@ ion-alert button:hover{
   border: 0px double grey;
   color: grey;
 }
+
 .FlexInfo button:hover{
   cursor: pointer;
   background: #cee6f1;
@@ -364,6 +373,7 @@ ion-alert button:hover{
 .TableClose{
   overflow-x: hidden;
   overflow-y: scroll;
+  height: 250px;
 }
 table{
   border-collapse: collapse;
@@ -470,4 +480,28 @@ table{
 .fixedtext{
   height: 70px;
   resize: none;
+}
+
+.neutral{
+  background: rgba(27, 105, 250, 0.815);
+}
+
+
+
+
+.ExpiredInfo button{
+  width:70px;
+  margin-left: 5px;
+  border-radius: 7px;
+  border: 0px double grey;
+  color: grey;
+}
+
+.ExpiredInfo button:hover{
+  cursor: pointer;
+  background: #cee6f1;
+}
+
+.ExpiredInfo button:active{
+  background: #a4d4eb;
 }

@@ -71,14 +71,19 @@ const List = () =>{
           let expiryDate:any = new Date(items.ExpireDate);
           let currentDate:any =new Date();
           let DateSub = expiryDate-currentDate;
-          if(DateSub<2548931590 && DateSub>0){
+
+          if(items.Type === 2){
+            items.ExpireDate = <p className="badgeText neutral">Fixed Asset</p>
+          }
+
+          if(DateSub<2548931590 && DateSub>0 && items.Type !== 2){
             items.ExpireDate = <p className="badgeText warning" >Expiring On {items.ExpireDate}</p>
           }
 
-          if(TodaysDate>=new Date(items.ExpireDate)){
+          if(TodaysDate>=new Date(items.ExpireDate) && items.Type !== 2){
             items.ExpireDate = <p className="badgeText danger" ><IoCalendar/> Expired On {items.ExpireDate}</p>
           }
-          if(TodaysDate<new Date(items.ExpireDate)){
+          if(TodaysDate<new Date(items.ExpireDate) && items.Type !== 2){
             items.ExpireDate = <p className="badgeText primary" ><IoCalendar/> Expiry On {items.ExpireDate}</p>
           }
 

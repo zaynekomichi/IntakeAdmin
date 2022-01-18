@@ -80,8 +80,7 @@ useEffect(()=>{
       <IonAlert
       isOpen={visible}
       header={productName}
-      message={`Item  Code:- <br/> ${code} <br/>
-      Item Quantity ${quantity} <br/>
+      message={`<br/>Item  Code:- <br/> ${code} <br/><br/><br/>
       `}
       buttons={[
          {

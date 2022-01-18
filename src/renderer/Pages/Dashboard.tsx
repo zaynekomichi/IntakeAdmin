@@ -3,14 +3,17 @@ import { IonAlert} from "@ionic/react";
 import { useState,useEffect } from "react";
 import { serverLink } from "renderer/links";
 import { IoClose,IoPersonAdd, IoAdd } from "react-icons/io5";
-import Alert from "renderer/components/alert";
 import { useHistory } from "react-router";
+
 
 
 const Dashboard = () =>{
 
   const history = useHistory();
-
+  const [quantity,setQuantity] = useState<number>(0);
+  const [expireDate,setExpireDate] = useState('');
+  const [dateSigned,setDateSigned] = useState('');
+  const [code,setCode] = useState('');
   const [cardData, setCardData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [RecentData, setRecentData] = useState([]);
@@ -23,6 +26,12 @@ const Dashboard = () =>{
   const [OpenFourth, setOpenFourth] = useState(false);
   const [OpenFifth,setOpenFifth] = useState(false);
   const [OpenSixth,setOpenSixth] = useState(false);
+  const [showDel,setShowDel] = useState(false);
+  const [productName,setProductName] = useState('');
+  const [rone,setrone] = useState(false);
+  const [rtwo,setrtwo] = useState(false);
+  const [rthree,setrthree] = useState(false);
+  const [rfour,setrfour] = useState(false)
 
   const requests= ()=>{
     axios.get(`${serverLink}Dashboard.php`,{
@@ -132,6 +141,48 @@ const addUser=(data:any)=>{
   }
 }
 
+const DeleteItem = (id:number)=>{
+  axios.get(`${serverLink}Dashboard.php`,{
+    params:{
+      'deleteItem':1,
+      'id':id
+    }
+  }).then((response)=>{
+    if(response.data===1){
+      setOpenFifth(true);
+    }else{
+      setOpenSec(true);
+    }
+  }).catch((error)=>{
+    setOpenSec(true);
+  })
+
+}
+
+const Restock = ()=>{
+  if(quantity===0 ||dateSigned===''||expireDate===''){
+    setOpenSec(true);
+  }
+  axios.get(`${serverLink}Dashboard.php`,{
+    params:{
+      'restock':1,
+      id,
+      code,
+      quantity,
+      dateSigned,
+      expireDate,
+    }
+  }).then((response)=>{
+    if(response.data===1){
+      setOpenFifth(true)
+    }else{
+      setOpenSec(true)
+    }
+  }).catch((error)=>{
+    setOpenSec(true)
+  })
+}
+
   return(
     <div className="Container">
       <h1>Dashboard</h1>
@@ -149,7 +200,7 @@ const addUser=(data:any)=>{
           <h1 className="specialText">{cardData[3]}</h1>
         </div>
         <div className="GeneralCards">
-          <h3>Expiring Soon</h3>
+          <h3>Expired Items</h3>
           <h1 className="specialText">{cardData[2]}</h1>
         </div>
       </div>
@@ -209,17 +260,27 @@ const addUser=(data:any)=>{
         </div>
 
         <div className="TableClose">
-          <p className="specialText">Recent Withdrawals</p>
+          <p className="specialText">Expired Items</p>
           <table>
             <tbody>
               {RecentData.map((items:any)=>{
                 return(
                 <tr className="specialTr" key={items.id}>
-                  <td>{items.TakeoutDate}</td>
-                  <td>{items.TakeoutTime}</td>
+                  <td>{items.ExpireDate}</td>
                   <td>{items.productName}</td>
                   <td>{items.Quantity}</td>
-                  <td>{items.User}</td>
+                  <td>
+                    <div className="ExpiredInfo">
+                      <button onClick={()=>{
+                        setId(items.id);
+                        setrone(true);
+                      }}>Restock</button>
+                      <button onClick={()=>{
+                        setId(items.id)
+                        setProductName(items.productName)
+                        setShowDel(true)}}>Delete</button>
+                    </div>
+                  </td>
                 </tr>
 
                 );
@@ -375,6 +436,7 @@ const addUser=(data:any)=>{
 
       {/* Modal window for history */}
       <div className="ion-modal" style={{'display':OpenFirst}}>
+
         <div className="FixedItems">
           <div className="Close-Btn" style={{'textAlign':'right'}}>
             <IoClose size={30} onClick={()=>{setOpenFirst('none')}}/>
@@ -414,6 +476,149 @@ const addUser=(data:any)=>{
           </tbody>
         </table>
       </div>
+      <IonAlert
+        isOpen={showDel}
+        header={"Alert"}
+        message={`<br/>Are you sure you want to delete<br/> ${productName}<br/><br/><br/>`}
+        buttons={[
+          {
+            text:'Delete',
+            role:'Del',
+            handler:()=>{
+              setShowDel(false)
+              DeleteItem(id)
+              requests();
+            }
+          },
+          {
+            text:'Cancel',
+            role:'Cancel',
+            handler:()=>{
+              setShowDel(false)
+            }
+          }
+        ]}
+      />
+
+      <IonAlert
+        isOpen={rone}
+        header={'Restock'}
+        inputs={[
+          {
+            type:'number',
+            name:'Quantity',
+            placeholder:'Quantity'
+          }
+        ]}
+        buttons={[
+          {
+            text:'Next',
+            role:'',
+            handler:(data)=>{
+              setQuantity(data.Quantity)
+              setrtwo(true);
+              setrone(false);
+            }
+          },
+          {
+            text:'Cancel',
+            role:'Dismiss',
+            handler:()=>{
+              setrone(false);
+            }
+          }
+        ]}
+      />
+      <IonAlert
+        isOpen={rtwo}
+        header={'Restock'}
+        message={'Date Received'}
+        inputs={[
+          {
+            type:'date',
+            name:'date',
+            placeholder:'Quantity'
+          }
+        ]}
+        buttons={[
+          {
+            text:'Next',
+            role:'restock',
+            handler:(data)=>{
+              setDateSigned(data.date)
+              setrthree(true)
+              setrtwo(false)
+            }
+          },
+          {
+            text:'Cancel',
+            role:'Dismiss',
+            handler:()=>{
+              setrtwo(false)
+            }
+          }
+        ]}
+      />
+      <IonAlert
+        isOpen={rthree}
+        header={'Restock'}
+        message={'Expiry Date'}
+        inputs={[
+          {
+            type:'date',
+            name:'date',
+          }
+        ]}
+        buttons={[
+          {
+            text:'Next',
+            role:'restock',
+            handler:(data)=>{
+              setExpireDate(data.date)
+              setrfour(true)
+              setrthree(false);
+            }
+          },
+          {
+            text:'Cancel',
+            role:'Dismiss',
+            handler:()=>{
+              setrthree(false);
+            }
+          }
+        ]}
+      />
+    <IonAlert
+        isOpen={rfour}
+        header={'Restock'}
+        message={'Code'}
+        inputs={[
+          {
+            type:'text',
+            name:'code',
+          }
+        ]}
+        buttons={[
+          {
+            text:'Restock',
+            role:'restock',
+            handler:(data)=>{
+              setExpireDate(data.code)
+              Restock();
+              setrfour(false);
+            }
+          },
+          {
+            text:'Cancel',
+            role:'Dismiss',
+            handler:()=>{
+              Restock()
+              setrfour(false);
+            }
+          }
+        ]}
+      />
+
     </div>
 
   );
